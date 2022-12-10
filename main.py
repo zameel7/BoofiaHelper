@@ -85,7 +85,7 @@ def pursale():
         return render_template("pursale.html")
     else:
         sale = request.form.get("sale")
-        salevat = request.form.get("salevat")
+        salevat = int(sale)/115
         purchase = request.form.get("purchase")
         tdate = request.form.get("date")
         db.execute(
