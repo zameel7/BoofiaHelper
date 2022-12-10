@@ -85,7 +85,6 @@ def pursale():
         return render_template("pursale.html")
     else:
         sale = request.form.get("sale")
-        salevat = int(sale)/115
         purchase = request.form.get("purchase")
         tdate = request.form.get("date")
         db.execute(
@@ -96,11 +95,12 @@ def pursale():
             flash("Enter all details")
             return redirect("/pursale")
         sale = float(sale)
+        salevat = sale-(sale*100)/115
         purchase = float(purchase)
-        purvat = purchase * 0.15
+        purvat = purchase-(purchase*100)/115
         db.execute(
             "INSERT INTO pursale(user_id, sales, salevat, purchase, purvat, dt) VALUES(?,?,?,?,?,?)",
-            session["user_id"], sale, salevat, purchase, purvat, tdate)
+            session["user_id"], sale-salevat, salevat, purchase, purvat, tdate)
         return redirect("/pursale")
 
 
@@ -130,7 +130,7 @@ def pursaleview():
         total = db.execute(
             "SELECT sum(sales) AS sums, sum(purchase) AS sump, sum(salevat) AS sumsv, sum(purvat) AS sumpv FROM pursale WHERE user_id = ? AND strftime('%m', dt) = ? AND strftime('%Y', dt) = ?",
             session["user_id"], month, year)
-        sump = total[0]["sump"]
+        sump = total[0]["sump"]-total[0]["sumpv"]
         sumpv = total[0]["sumpv"]
         sums = total[0]["sums"]-total[0]["sumsv"]
         sumsv = total[0]["sumsv"]
