@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+
+<style>
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    .print-container, .print-container * {
+      visibility:visible;
+    }
+    .print-container {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+</style>
+
+<div class="container print-container justify-center">
+  <h2 class="text-center text-danger">{{ username[0].username }}</h2>
+  <p class="text-center text-muted">{{ lists[0].dt }}</p>
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Sl.No.</th>
+        <th scope="col">Item</th>
+        <th scope="col">Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set count = namespace(value=1) %}
+      {% for item in lists %}
+          <tr>
+            <td>{{  count.value }}</td>
+            <td>{{ item.item[2:] }}</td>
+            <td>{{ item.qty }}</td>
+          </tr>
+          {% set count.value = count.value + 1 %}
+      {% endfor %}
+
+    </tbody>
+  </table>
+</div>
+<br><br><br>
+<button onclick="window.print()">Print</button>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    VAT Print
+{% endblock %}
+
+{% block main %}
+
+<style>
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    .print-container, .print-container * {
+      visibility:visible;
+    }
+    .print-container {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+</style>
+
+<div class="container print-container justify-center">
+  <h2 class="text-center text-danger">Purchase, Sale and VAT</h2>
+  <h4 class="text-center text-dark">of month - {{ month }}</h4>
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Sales</th>
+        <th scope="col">Sales VAT</th>
+        <th scope="col">Purchase</th>
+        <th scope="col">Purchase VAT</th>
+        <th scope="col">VAT to be paid</th>
+      </tr>
+    </thead>
+     <tbody>
+      {% set count = namespace(value=1) %}
+      {% for i in details %}
+          {% set vat = (i.sales-i.purchase)+(i.salevat-i.purvat) %}
+          <tr>
+            <td>{{  count.value }}</td>
+            <td>{{ i.sales }}</td>
+            <td>{{ (i.salevat) | round(2) }}</td>
+            <td>{{ i.purchase }}</td>
+            <td>{{ (i.purvat) | round(2) }}</td>
+            <td>{{ ((vat-(vat*0.15))*0.15) | round(2) }}</td>
+          </tr>
+          {% set count.value = count.value + 1 %}
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="card mx-auto w-50">
+      <div class="card-header text-dark font-weight-bold"><h3>TOTAL</h3></div>
+      <div class="card-body text-left">
+          <h5><span class="text-danger">Sales:</span> {{ sales | round(2) }} SAR</h5>
+          <h5><span class="text-danger">Purchase:</span> {{ purchase | round(2) }} SAR</h5>
+          <h5><span class="text-danger">VAT amount:</span> {{ vats }} SAR</h5>
+      </div>
+  </div>
+</div>
+<br><br><br>
+<button onclick="window.print()">Print</button>
+
+{% endblock %}

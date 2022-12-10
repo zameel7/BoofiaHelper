@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add item
+{% endblock %}
+
+{% block main %}
+    <form action="/additem" method="post">
+        <div class="form-group">
+            <label>Item </label>
+            <select class="form-control" name="item">
+                <option disabled selected>--Select--</option>
+                {% for item in itemlist %}
+                        <option>{{itemlist.index(item)}} {{ item }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Quantity </label>
+            <input class="form-control" name="qty" placeholder="Quantity" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Add</button>
+
+    </form>
+{% endblock %}

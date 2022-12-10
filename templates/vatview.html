@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    VAT Details
+{% endblock %}
+
+{% block main %}
+    <form action="/vatview" method="post">
+         <div class="form-group">
+            <label>Month </label>
+            <select class="form-control" name="month">
+                <option disabled selected>--Select--</option>
+                {% set count = namespace(value=1) %}
+                {% for month in mlist %}
+                        <option value="{{ count.value }}">{{ month }}</option>
+                        {% set count.value = count.value + 1 %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+          <label>Year </label>
+          <input class="form-control" name="year" placeholder="Year" type="number">
+        </div>
+        <button class="btn btn-primary" type="submit">Enter</button>
+
+    </form>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sale Purchase Entry
+{% endblock %}
+
+{% block main %}
+    <form action="/pursale" method="post">
+        <div class="form-group">
+            <label>Sale </label>
+            <input class="form-control" name="sale" placeholder="Sale" type="text">
+            <input class="form-control" name="salevat" placeholder="Sale VAT" type="text">
+        </div>
+        <div class="form-group">
+            <label>Purchase </label>
+            <input class="form-control" name="purchase" placeholder="Purchase" type="text">
+        </div>
+        <div class="form-group">
+            <label>Date </label>
+            <input class="form-control" name="date" type="date">
+        </div>
+        <button class="btn btn-primary" type="submit">Enter</button>
+
+    </form>
+{% endblock %}
