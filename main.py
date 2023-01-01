@@ -100,7 +100,7 @@ def pursale():
         purvat = purchase-(purchase*100)/115
         db.execute(
             "INSERT INTO pursale(user_id, sales, salevat, purchase, purvat, dt) VALUES(?,?,?,?,?,?)",
-            session["user_id"], sale-salevat, salevat, purchase, purvat, tdate)
+            session["user_id"], sale, salevat, purchase, purvat, tdate)
         return redirect("/pursale")
 
 
@@ -130,9 +130,9 @@ def pursaleview():
         total = db.execute(
             "SELECT sum(sales) AS sums, sum(purchase) AS sump, sum(salevat) AS sumsv, sum(purvat) AS sumpv FROM pursale WHERE user_id = ? AND strftime('%m', dt) = ? AND strftime('%Y', dt) = ?",
             session["user_id"], month, year)
-        sump = total[0]["sump"]-total[0]["sumpv"]
+        sump = total[0]["sump"]
         sumpv = total[0]["sumpv"]
-        sums = total[0]["sums"]-total[0]["sumsv"]
+        sums = total[0]["sums"]
         sumsv = total[0]["sumsv"]
         vat = (sums - sump) + (sumsv - sumpv)
         vats = round((vat - vat * 0.15) * 0.15, 2)
