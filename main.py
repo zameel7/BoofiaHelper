@@ -134,11 +134,10 @@ def pursaleview():
         sumpv = total[0]["sumpv"]
         sums = total[0]["sums"]
         sumsv = total[0]["sumsv"]
-        vat = (sums - sump) + (sumsv - sumpv)
-        vats = round((vat - vat * 0.15) * 0.15, 2)
+        vats = sumsv - sumpv
         return render_template("vatviewprint.html",
                                details=details,
-                               sales=total[0]["sums"],
+                               sales=sums ,
                                purchase=sump,
                                vats=vats,
                                month=mlist[int(month) - 1])

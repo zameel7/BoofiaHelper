@@ -38,14 +38,14 @@
      <tbody>
       {% set count = namespace(value=1) %}
       {% for i in details %}
-          {% set vat = (i.sales-i.purchase)+(i.salevat-i.purvat) %}
+          {% set vat = (i.salevat-i.purvat) %}
           <tr>
             <td>{{  count.value }}</td>
             <td>{{ i.sales }}</td>
             <td>{{ (i.salevat) | round(2) }}</td>
             <td>{{ i.purchase }}</td>
             <td>{{ (i.purvat) | round(2) }}</td>
-            <td>{{ ((vat-(vat*0.15))*0.15) | round(2) }}</td>
+            <td>{{ (vat) | round(2) }}</td>
           </tr>
           {% set count.value = count.value + 1 %}
       {% endfor %}
@@ -56,7 +56,7 @@
       <div class="card-body text-left">
           <h5><span class="text-danger">Sales:</span> {{ sales | round(2) }} SAR</h5>
           <h5><span class="text-danger">Purchase:</span> {{ purchase | round(2) }} SAR</h5>
-          <h5><span class="text-danger">VAT amount:</span> {{ vats }} SAR</h5>
+          <h5><span class="text-danger">VAT amount:</span> {{ vats | round(2) }} SAR</h5>
       </div>
   </div>
 </div>
